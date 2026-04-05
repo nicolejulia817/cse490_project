@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module DataMem#(
+module Mem#(
     parameter ADDR_DATA_WIDTH = 16,
     parameter MEM_SIZE_WORDS = 64
 )(
@@ -28,7 +28,7 @@ module DataMem#(
     input [6:0] rw_addr, //the top 9 bits are ignored and never reach the datamem block, as there are only 128 addresses 7 bits are enough.
     input [15:0] data,
     input wire MemWrite,
-    input [15:0] MemOut
+    output [15:0] MemOut
     );
     
     //128 byte memory (2 byte words * 64 words)

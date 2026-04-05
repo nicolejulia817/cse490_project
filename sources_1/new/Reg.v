@@ -43,5 +43,19 @@ module RegisterFile #(
     // 16 registers, each 16 bits wide
     reg [15:0] registers [0:NUM_REGS-1];
 
-
+    integer i;
+    initial begin
+        for (i = 0; i < NUM_REGS; i = i + 1) begin
+            registers[i] = 16'd0;
+        end
+    end
+    
+    assign read_data_1 = (read_reg_1 == 4'd0) ? 16'd0 : registers[read_reg_1];
+    assign read_data_2 = (read_reg_2 == 4'd0) ? 16'd0 : registers[read_reg_2];
+    
+    always @(posedge clk) begin
+        if (reg_write && write_reg != 4'd0) begin
+            registers[write_reg] <= write_data;
+        end
+    end
 endmodule
