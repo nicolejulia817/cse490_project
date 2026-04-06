@@ -24,12 +24,12 @@ module ALU(
     input wire [15:0] rs,
     input wire [15:0] rdimm,
     input wire [2:0] ALUop,
-    output wire [0:0] zero,
+    output wire zero,
     output reg [15:0] ALU_out
     );
     //variable names for ALUop signals
-    localparam ADD = 3'b00x;
-    localparam SUB = 3'b1xx;
+    localparam ADD = 3'b000;
+    localparam SUB = 3'b100;
     localparam SLL = 3'b010;
     localparam AND = 3'b011;
     //main execution loop, constant

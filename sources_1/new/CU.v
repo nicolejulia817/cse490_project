@@ -26,6 +26,8 @@ module CU(
     output reg [2:0] ALUop,
     output reg ALUsrc, //0 is for register, 1 is for imm
     output reg Branch, //0 is dont take, 1 is take branch
+    output reg BEQflag, //0 is BEQ, 1 is BNE
+    output reg Jump,
     output reg ImmSel, //0 is 0 extend, 1 is sign extend
     output reg MemWrite,  
     output reg MemtoReg, 
@@ -55,6 +57,8 @@ module CU(
         Branch   = 0;
         MemWrite = 0;
         MemtoReg = 0;
+        BEQflag  = 0;
+        Jump     = 0;
         case (opcode)
          ALU_R:
             case (func)
@@ -82,13 +86,6 @@ module CU(
                     ALUsrc = 0;
                     ImmSel = 0;
                     end
-                BEQ: begin
-                    ALUop = 3'b100;
-                    RegWrite = 0;
-                    ALUsrc = 0;
-                    ImmSel = 0;
-                    Branch = 1;
-                    end
             endcase
          LW: begin
                 ALUop = 3'b000;
@@ -112,7 +109,16 @@ module CU(
          BEQ: begin
                 ALUop = 3'b100;
                 Branch = 1;
+                BEQflag = 0;
+                ImmSel = 1;
                 end
+         BNE: begin
+                ALUop = 3'b100;
+                Branch = 1;
+                BEQflag = 1;
+                ImmSel = 1;
+             end
+         JMP: Jump =1; 
         endcase
         
     end 
